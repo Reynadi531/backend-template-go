@@ -1,0 +1,25 @@
+version: "3"
+services:
+  backend-template-go:
+    build:
+      context: ../
+      dockerfile: docker/dev.Dockerfile
+    ports:
+      - "5000:5000"
+    env_file:
+      - app.env
+    volumes:
+      - ../:/app
+    restart: unless-stopped
+
+  postgres-backend-template-go:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - db.env
+    restart: unless-stopped
+    volumes:
+      - postgres-backend-template-go:/var/lib/postgresql/data
+volumes:
+  postgres-backend-template-go:
